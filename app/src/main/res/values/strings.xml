@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Jabber</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="nickname">Nickname</string>
+    <string name="register">Register</string>
+
 </resources>
+
+
+
+
+<!--    <?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="string_name">text_string</string>
+</resources>
+-->
