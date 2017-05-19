@@ -1,7 +1,15 @@
+<!--
+Usage in Layout-File (e.g. activity_login.xml)
+android:hint="@string/password_repeat"
+android:text="@string/register"
+...
+-->
+
 <resources>
     <string name="app_name">Jabber</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="password_repeat">Repeat Password></string>
     <string name="nickname">Nickname</string>
     <string name="register">Register</string>
 
@@ -10,8 +18,4 @@
 
 
 
-<!--    <?xml version="1.0" encoding="utf-8"?>
-<resources>
-<string name="string_name">text_string</string>
-</resources>
--->
+
