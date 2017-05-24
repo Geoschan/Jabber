@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
 
+import java.io.IOException;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -12,6 +14,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        Server se= new Server();
+        try {
+            se.register("Frank", "peter");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
