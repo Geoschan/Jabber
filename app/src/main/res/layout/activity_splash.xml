@@ -8,7 +8,7 @@
     tools:context="enterprise.lgm.jabber.SplashActivity">
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="277dp"
         android:layout_height="84dp"
         android:background="?android:attr/colorActivatedHighlight"
@@ -105,6 +105,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="0dp"
         app:layout_constraintVertical_bias="0.258"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin" />
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,13 +14,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Server se= new Server();
-        try {
-            se.register("Frank", "peter");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void gotoLogin(View v)
