@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,26 +36,21 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Alert if passwords are not equal
                 if(!(pw1.equals(pw2))) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("You did not repeat your password correctly.");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton(
-                            "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alertRepeat = builder.create();
-                    alertRepeat.show();
+                    AlertBuilder.alertSingleChoice("You did not repeat your password correctly.", "OK", RegisterActivity.this);
                 }
-
-                //if pws are equal, try to register user
+                //Try to register user if pws are equal
                 else if (pw1.equals(pw2)) {
                     try {
                         Server.getServer().register(user, pw1);
+                        //TODO make Thread return correct string
+
+//                        System.out.println("temp: " + temp);
+//                        String temp2 = getString(R.string.userAlreadyExists);
+//                        System.out.println("temp2: " + temp2);
+//
+//                        if(temp.contains(temp2)) {
+//                            AlertBuilder.alertSingleChoice(getString(R.string.userAlreadyExists), "OK", RegisterActivity.this);
+//                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
