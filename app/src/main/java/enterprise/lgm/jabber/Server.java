@@ -30,8 +30,8 @@ public class Server {
 
     //methods for server related functions
 
-    public int register(final String user, final String pw) throws IOException {
-        final int[] answer = new int[1];
+    public String register(final String user, final String pw) throws IOException {
+        final String[] answer = new String[1];
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -55,10 +55,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     System.out.println(ausgabe);
-
-
-                    answer[0] = in.read();
-                    System.out.println("in read ist: "+answer[0]);
+                    answer[0] = ausgabe;
 
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
@@ -106,7 +103,7 @@ public class Server {
 
 
                     answer[0] = in.read();
-                    System.out.println("in read ist: "+answer[0]);
+                    System.out.println("in read ist: " + answer[0]);
 
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();

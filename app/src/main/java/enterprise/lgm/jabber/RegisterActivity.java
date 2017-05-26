@@ -1,5 +1,7 @@
 package enterprise.lgm.jabber;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +32,24 @@ public class RegisterActivity extends AppCompatActivity {
 
                 EditText password2 = (EditText) findViewById(R.id.registerPasswordRepeat);
                 String pw2 = password2.getText().toString();
+
+                //Alert if passwords are not equal
+                if(!(pw1.equals(pw2))) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("You did not repeat your password correctly.");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alertRepeat = builder.create();
+                    alertRepeat.show();
+                }
 
                 if (pw1.equals(pw2)) {
                     try {
