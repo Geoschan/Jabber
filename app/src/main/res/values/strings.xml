@@ -6,6 +6,7 @@ android:text="@string/register"
 -->
 
 <resources>
+    <!--GENERAL-->
     <string name="app_name">Jabber</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -13,9 +14,26 @@ android:text="@string/register"
     <string name="nickname">Nickname</string>
     <string name="register">Register</string>
 
+    <!--SERVER-->
+    <string name="userCreated">Benutzer erfolgreich angelegt</string>
+    <string name="userAlreadyExists">Benutzer existiert bereits</string>
+    <string name="userValidated">Benutzer erfolgreich validiert</string>
+    <string name="passwordIncorrect">Passwort nicht korrekt</string>
+    <string name="userNotExisting">Benutzer existiert nicht</string>
+    <string name="passwordUpdated">Passwort erfolgreich aktualisiert</string>
+    <string name="passwordUpdateNotCorrect">Altes Passwort nicht korrekt</string>
+    <string name="pushTokenUpdated">PushToken erfolgreich aktualisiert</string>
+    <string name="messageSent">Nachricht verschickt</string>
+    <string name="senderOrRecipientUnknown">Sender oder Empfänger dem System nicht bekannt</string>
+    <string name="messageRetrieved">Nachrichten abgerufen</string><!-- SAME for COMPLETE conversation and OFFSET-->
+    <string name="recipientUnknown">Empfänger unbekannt</string><!-- SAME for COMPLETE conversation and OFFSET-->
+    <string name="AddedSuccessfully">Freund hinzugefügt</string>
+    <string name="AddAlreadyOnList">Freund bereits auf der Liste</string>
+    <string name="DeletedSuccessfully">Freund entfernt</string>
+    <string name="DeleteNotOnList">Freund nicht auf der Liste</string>
+    <string name="FriendsListed">Freunde aufgelistet</string>
+
+
 </resources>
-
-
-
 
 
