@@ -75,7 +75,7 @@
         tools:text="Register" />
 
     <EditText
-        android:id="@+id/editNickname"
+        android:id="@+id/registerNickname"
         android:layout_width="286dp"
         android:layout_height="45dp"
         android:ems="10"
@@ -92,7 +92,7 @@
         app:layout_constraintVertical_bias="0.19999999" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/registerPassword"
         android:layout_width="286dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
@@ -105,11 +105,11 @@
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNickname"
+        app:layout_constraintTop_toBottomOf="@+id/registerNickname"
         app:layout_constraintVertical_bias="0.19999999" />
 
     <EditText
-        android:id="@+id/editPassword2"
+        android:id="@+id/registerPasswordRepeat"
         android:layout_width="286dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
@@ -122,7 +122,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword"
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword"
         app:layout_constraintVertical_bias="0.39999998" />
 
 </android.support.constraint.ConstraintLayout>
