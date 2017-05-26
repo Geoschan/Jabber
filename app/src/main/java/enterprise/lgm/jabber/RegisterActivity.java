@@ -51,7 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
                     alertRepeat.show();
                 }
 
-                if (pw1.equals(pw2)) {
+                //if pws are equal, try to register user
+                else if (pw1.equals(pw2)) {
                     try {
                         Server.getServer().register(user, pw1);
                     } catch (IOException e) {
