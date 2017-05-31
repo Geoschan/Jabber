@@ -29,7 +29,16 @@ public class LoginActivity extends AppCompatActivity {
                 String pw = password.getText().toString();
 
                 try {
-                    System.out.println("cmooon "+Server.getServer().login(user, pw));
+
+                    String message = Server.getServer().login(user, pw);
+                    if(message.contains("1")){
+                        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+                        startActivity(intent);
+                    }else if (message.contains("0")){
+                        AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);
+                    }else{
+                        AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", LoginActivity.this);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -38,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         }
 
-    public void gotoLogin(View v) {
+    public void gotoSplash(View v) {
         Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
         startActivity(intent);
     }
