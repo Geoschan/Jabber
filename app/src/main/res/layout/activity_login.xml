@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnLogin2"
         android:layout_width="277dp"
         android:layout_height="84dp"
         android:background="?android:attr/colorActivatedHighlight"
@@ -79,7 +79,7 @@
         tools:text="Login" />
 
     <EditText
-        android:id="@+id/registerPassword"
+        android:id="@+id/loginPassword"
         android:layout_width="286dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
@@ -88,7 +88,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
@@ -96,7 +96,7 @@
         app:layout_constraintVertical_bias="0.569" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/loginNickname"
         android:layout_width="286dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
@@ -106,7 +106,7 @@
         android:ems="10"
         android:hint="@string/nickname"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/registerPassword"
+        app:layout_constraintBottom_toTopOf="@+id/loginPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout2"

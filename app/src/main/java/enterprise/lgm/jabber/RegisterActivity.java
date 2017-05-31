@@ -1,14 +1,11 @@
 package enterprise.lgm.jabber;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,8 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-
-        Button btnRegister = (Button) findViewById(R.id.btnRegister);
+        Button btnRegister = (Button) findViewById(R.id.btnLogin2);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,14 +46,14 @@ public class RegisterActivity extends AppCompatActivity {
                 EditText nickname = (EditText) findViewById(R.id.registerNickname);
                 String user = nickname.getText().toString();
 
-                EditText password1 = (EditText) findViewById(R.id.registerPassword);
+                EditText password1 = (EditText) findViewById(R.id.loginPassword);
                 String pw1 = password1.getText().toString();
 
                 EditText password2 = (EditText) findViewById(R.id.registerPasswordRepeat);
                 String pw2 = password2.getText().toString();
 
                 //Alert if passwords are not equal
-                if(!(pw1.equals(pw2))) {
+                if (!(pw1.equals(pw2))) {
                     AlertBuilder.alertSingleChoice("You did not repeat your password correctly.", "OK", RegisterActivity.this);
                 }
                 //Try to register user if pws are equal
@@ -74,8 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                        if(temp.contains(temp2)) {
 //                            AlertBuilder.alertSingleChoice(getString(R.string.userAlreadyExists), "OK", RegisterActivity.this);
 //                        }
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
 
                         e.printStackTrace();
                     }
