@@ -6,16 +6,26 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
+    String nickname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViewById(R.id.loginNickname).requestFocus();
+
+       if(getIntent().getStringExtra("nickname")!=null){
+            nickname= getIntent().getStringExtra("nickname");
+        }
+        if(nickname!=null){
+           EditText nicknameText = (EditText)findViewById(R.id.loginNickname);
+            nicknameText.setText(nickname, TextView.BufferType.EDITABLE);
+        }
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin2);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     String message = Server.getServer().login(user, pw);
                     if(message.contains("1")){
-                        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }else if (message.contains("0")){
                         AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);

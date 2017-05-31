@@ -60,16 +60,20 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (pw1.equals(pw2)) {
                     try {
                         notificationGenerator();
-                        Server.getServer().register(user, pw1);
-                        //TODO make Thread return correct string
+                        String message= Server.getServer().register(user, pw1);
 
-//                        System.out.println("temp: " + temp);
-//                        String temp2 = getString(R.string.userAlreadyExists);
-//                        System.out.println("temp2: " + temp2);
-//
-//                        if(temp.contains(temp2)) {
-//                            AlertBuilder.alertSingleChoice(getString(R.string.userAlreadyExists), "OK", RegisterActivity.this);
-//                        }
+                        if(message.contains("1")){
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+
+                            intent.putExtra("nickname", user);
+                            startActivity(intent);
+
+                        }else if (message.contains("0")){
+                            AlertBuilder.alertSingleChoice("The nickname is not available. Please try another one.", "OK", RegisterActivity.this);
+                        }else{
+                            AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", RegisterActivity.this);
+                        }
+
                     } catch (IOException e) {
 
                         e.printStackTrace();

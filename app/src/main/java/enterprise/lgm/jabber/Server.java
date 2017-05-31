@@ -33,7 +33,7 @@ public class Server {
 
     public String register(final String user, final String pw) throws IOException {
         final String[] registerAnswer = new String[1];
-
+        final CountDownLatch latch = new CountDownLatch(1);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -56,9 +56,9 @@ public class Server {
                     String ausgabe = "";
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
-                    System.out.println("Ausgabe: " + ausgabe);
                     registerAnswer[0] = ausgabe;
                     System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
@@ -76,6 +76,11 @@ public class Server {
 
         //PROBLEM: Thread writes correct value to registerAnswer, BUT change is not visible from outside the thread
         //outside the thread the variable registerAnswer[] is not even initialized
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("registerAnswer: (OUTER) " + registerAnswer[0]);
         return registerAnswer[0];
     }

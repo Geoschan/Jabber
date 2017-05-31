@@ -32,6 +32,12 @@ android:text="@string/register"
     <string name="DeletedSuccessfully">Freund entfernt</string>
     <string name="DeleteNotOnList">Freund nicht auf der Liste</string>
     <string name="FriendsListed">Freunde aufgelistet</string>
+    <string name="title_activity_slidebar">slidebar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 
 </resources>
