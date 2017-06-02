@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     public void gotoSplash(View v) {
-        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 }
