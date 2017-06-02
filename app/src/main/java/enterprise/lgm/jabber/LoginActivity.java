@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         findViewById(R.id.loginNickname).requestFocus();
 
+        //nickname übergeben
        if(getIntent().getStringExtra("nickname")!=null){
             nickname= getIntent().getStringExtra("nickname");
         }
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     String message = Server.getServer().login(user, pw);
                     if(message.contains("1")){
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("nickname", user);
                         startActivity(intent);
                     }else if (message.contains("0")){
                         AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);

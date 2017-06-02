@@ -24,7 +24,18 @@
         <activity android:name=".RegisterActivity">
             android:windowSoftInputMode="adjustPan|adjustResize"
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".nav_drawer"
+            android:label="@string/title_activity_nav_drawer"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FriendsActivity"
+            android:label="@string/title_activity_friends"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
