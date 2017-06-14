@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -57,6 +60,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        String initial = Character.toString(nickname.charAt(0)).toUpperCase();
+        int color = ColorGenerator.MATERIAL.getColor(initial);
+        TextDrawable iconInitial = TextDrawable.builder().buildRound(initial, color);
+        NavigationView navHeaderView = (NavigationView)findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView imgView = (ImageView)headerView.findViewById(R.id.drawerIcon);
+        imgView.setImageDrawable(iconInitial);
     }
 
     @Override
