@@ -3,6 +3,8 @@ package enterprise.lgm.jabber;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputType;
+import android.widget.EditText;
 
 /**
  * Created by Marvin on 26.05.2017.
