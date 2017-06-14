@@ -43,11 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     String message = Server.getServer().login(user, pw);
 
-                    // Test ob Nachricht versendet wurde
-                    Server.getServer().sendMessage(user,user,"bla",pw);
-                    String s=Server.getServer().getMessage(user,user,pw);
-
-
                     if(message.contains("1")){
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("nickname", user);
