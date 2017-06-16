@@ -1,11 +1,18 @@
 package enterprise.lgm.jabber;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Created by Lutz on 24.05.2017.
@@ -546,6 +553,22 @@ public class Server {
             e.printStackTrace();
         }
         return registerAnswer[0];
+    }
+
+    protected void notificationGenerator(Context context,String title, String text)
+    {
+        Intent intent = new Intent(context, FriendsActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        //Icon fehlt mir
+        Notification n  = new Notification.Builder(context).
+                setContentTitle(title+""+"" )
+                .setContentText(text)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .setSmallIcon(android.R.drawable.ic_dialog_email).build();
+
+        NotificationManager notificationManager = (NotificationManager)  context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, n);
     }
 }
 

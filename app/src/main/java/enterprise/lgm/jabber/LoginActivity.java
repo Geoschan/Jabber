@@ -8,7 +8,7 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 
 import java.io.IOException;
 
@@ -101,4 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    // Beispiel für Notification
+
 }

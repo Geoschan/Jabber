@@ -1,8 +1,5 @@
 package enterprise.lgm.jabber;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,22 +12,7 @@ import java.io.IOException;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    // Beispiel für Notification
-    protected void notificationGenerator()
-    {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        //Icon fehlt mir
-        Notification n  = new Notification.Builder(this).
-                setContentTitle("The registration was successful ")
-                .setContentText("")
-                .setContentIntent(pIntent)
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.icon).build();
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, n);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +41,6 @@ public class RegisterActivity extends AppCompatActivity {
                 //Try to register user if pws are equal
                 else if (pw1.equals(pw2)) {
                     try {
-                        notificationGenerator();
                         String message= Server.getServer().register(user, pw1);
 
                         if(message.contains("1")){

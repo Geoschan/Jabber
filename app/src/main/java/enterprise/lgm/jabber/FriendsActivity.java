@@ -37,6 +37,15 @@ public class FriendsActivity extends AppCompatActivity {
         myList.add("something");
         friendList.setAdapter(new ArrayAdapter<String>(FriendsActivity.this, android.R.layout.simple_list_item_1, myList ));
 
+        // Notificationtest
+        try{
+        Server.getServer().addFriend("dummy", "dummy", "Geosch");
+
+            Server.getServer().sendMessage("dummy","Geosch","bla","abc");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Server.getServer().notificationGenerator(FriendsActivity.this,"You've got a new message from "+"Geosch","bla");
 
         final FloatingActionButton addFriend = (FloatingActionButton) findViewById(R.id.addFriend);
         addFriend.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +68,7 @@ public class FriendsActivity extends AppCompatActivity {
                                 else{
                                     try {
                                         Server.getServer().addFriend("dummy", "dummy", "figlero");
+
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
