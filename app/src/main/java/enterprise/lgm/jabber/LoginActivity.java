@@ -1,5 +1,4 @@
 package enterprise.lgm.jabber;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -15,17 +14,13 @@ import java.io.IOException;
 import static android.widget.TextView.BufferType.EDITABLE;
 
 public class LoginActivity extends AppCompatActivity {
-
     SharedPreferences shared;
     SharedPreferences.Editor editor;
-    EditText nickname;
-    EditText password;
-    EditText nicknameText;
     EditText nicknameShared=null;
     EditText passwordShared=null;
-    String nick;
-    String user;
-    String pw;
+    String nickRegistry;
+    String nickname;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +32,21 @@ public class LoginActivity extends AppCompatActivity {
 
         //nickname übergeben
         if(getIntent().getStringExtra("nickname")!=null){
-            nick= getIntent().getStringExtra("nickname");
-        }
-        if(nickname!=null){
-            nicknameText = (EditText)findViewById(R.id.loginNickname);
-            nicknameText.setText(nick, EDITABLE);
+            nickRegistry= getIntent().getStringExtra("nickname");
+            nicknameShared = (EditText)findViewById(R.id.loginNickname);
+            nicknameShared.setText(nickRegistry, EDITABLE);
         }
 
-        if(shared!=null) {
+        if(shared!=null && nickRegistry==null) {
             if(shared.contains("nickname")) {
                 nicknameShared = (EditText)findViewById(R.id.loginNickname);
                 nicknameShared.setText(shared.getString("nickname", ""), EDITABLE);
-                user=(shared.getString("nickname", ""));
+                nickname=(shared.getString("nickname", ""));
             }
             if(shared.contains("password")) {
                 passwordShared = (EditText)findViewById(R.id.loginPassword);
                 passwordShared.setText(shared.getString("password", ""), EDITABLE);
-                pw=(shared.getString("password", ""));
+                password=(shared.getString("password", ""));
             }
         }
 
@@ -75,22 +68,21 @@ public class LoginActivity extends AppCompatActivity {
     {
         SharedPreferences shared= getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
-
-        nickname = (EditText) findViewById(R.id.loginNickname);
-        user = nickname.getText().toString();
-
-        password = (EditText) findViewById(R.id.loginPassword);
-        pw = password.getText().toString();
+        nicknameShared = (EditText) findViewById(R.id.loginNickname);
+        nickname = nicknameShared.getText().toString();
+        passwordShared = (EditText) findViewById(R.id.loginPassword);
+        password = passwordShared.getText().toString();
 
         //Shared Preferences werden je nach Eingabe geändert
-           editor.putString("nickname", nickname.getText().toString());
-           editor.putString("password", password.getText().toString());
+           editor.putString("nickname", nicknameShared.getText().toString());
+           editor.putString("password", passwordShared.getText().toString());
            editor.apply();
+
         try {
-            String message = Server.getServer().login(user, pw);
+            String message = Server.getServer().login(nickname, password);
             if(message.contains("1")){
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("nickname", user);
+                intent.putExtra("nickname", nickname);
                 startActivity(intent);
             }else if (message.contains("0")){
                 AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);
@@ -101,7 +93,4 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    // Beispiel für Notification
-
 }
