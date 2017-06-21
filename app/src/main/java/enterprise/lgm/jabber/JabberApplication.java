@@ -1,8 +1,10 @@
 package enterprise.lgm.jabber;
 
 import android.app.Application;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+
 
 import enterprise.lgm.jabber.entities.User;
 
@@ -20,6 +22,9 @@ public class JabberApplication extends Application{
 
     public void setContext(Context context) {
         this.context = context;
+        //TODO set shared Prefs
+//        SharedPreferences shared = context.getSharedPreferences(Context.MODE_PRIVATE);
+//        this.prefs = shared;
     }
 
     public void setPrefs(SharedPreferences prefs) {
