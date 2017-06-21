@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -504,9 +508,9 @@ public class Server {
         return registerAnswer[0];
     }
 
-    public String listFriends(final String user, final String pw) throws IOException {
+    public ArrayList<String> listFriends(final String user, final String pw) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
-        final String[] registerAnswer = new String[1];
+        final JSONObject[] registerAnswer = new JSONObject[1];
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -528,10 +532,21 @@ public class Server {
 
                     Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                     String ausgabe = "";
-                    for (int c; (c = in.read()) >= 0; )
+                    for (int c; (c = in.read()) >= 0; ) {
                         ausgabe += (char) c;
-                    registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    }
+                    JSONObject object = null;
+                    try {
+                        object = new JSONObject(ausgabe);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    registerAnswer[0] = object;
+                    try {
+                        System.out.println("registerAnswer: (INNER) " + registerAnswer[0].getString("Data"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -552,7 +567,17 @@ public class Server {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return registerAnswer[0];
+        try {
+            JSONArray arr = registerAnswer[0].getJSONArray("Data");
+            ArrayList<String> list = new ArrayList<String>();
+            for(int i = 0; i < arr.length(); i++){
+                list.add(arr.get(i).toString());
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     protected void notificationGenerator(Context context,String title, String text)

@@ -33,9 +33,14 @@ public class FriendsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final ListView friendList = (ListView) findViewById(R.id.friendsList);
-        ArrayList<String> myList = new ArrayList<String>();
-        myList.add("something");
-        friendList.setAdapter(new ArrayAdapter<String>(FriendsActivity.this, android.R.layout.simple_list_item_1, myList ));
+        ArrayList<String> myList = null;
+        try {
+            myList = Server.getServer().listFriends("dummy", "dummy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(FriendsActivity.this, android.R.layout.simple_list_item_1, myList );
+        friendList.setAdapter(adapter);
 
         // Notificationtest
         try{
@@ -55,7 +60,7 @@ public class FriendsActivity extends AppCompatActivity {
                 builder.setMessage("Please enter the nickname: ");
                 builder.setCancelable(true);
                 final EditText input = new EditText(FriendsActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
                 builder.setPositiveButton(
                         "OK",
@@ -67,8 +72,10 @@ public class FriendsActivity extends AppCompatActivity {
                                 }
                                 else{
                                     try {
-                                        Server.getServer().addFriend("dummy", "dummy", "figlero");
-
+                                        Server.getServer().addFriend("dummy", "dummy", nickname);
+                                        adapter.notifyDataSetChanged();
+                                        friendList.invalidateViews();
+                                        recreate();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
