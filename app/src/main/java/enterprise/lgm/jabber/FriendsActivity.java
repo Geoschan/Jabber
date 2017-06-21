@@ -67,6 +67,8 @@ public class FriendsActivity extends AppCompatActivity {
                                             Server.getServer().removeFriend(app.getNickname(), app.getPassword(), selectedFromList);
                                             adapter.notifyDataSetChanged();
                                             friendList.invalidateViews();
+                                            MainActivity.adapter = new MobileArrayAdapter(FriendsActivity.this, Server.getServer().listFriends(app.getNickname(), app.getPassword()));
+                                            MainActivity.chatList.setAdapter(MainActivity.adapter);
                                             recreate();
                                             Toast.makeText(FriendsActivity.this, "Friend succesfully deleted!",
                                                     Toast.LENGTH_LONG).show();
@@ -117,6 +119,8 @@ public class FriendsActivity extends AppCompatActivity {
                                         //shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
                                         adapter.notifyDataSetChanged();
                                         friendList.invalidateViews();
+                                        MainActivity.adapter = new MobileArrayAdapter(FriendsActivity.this, Server.getServer().listFriends(app.getNickname(), app.getPassword()));
+                                        MainActivity.chatList.setAdapter(MainActivity.adapter);
                                         recreate();
                                         Toast.makeText(FriendsActivity.this, "Friend succesfully added!",
                                                 Toast.LENGTH_LONG).show();

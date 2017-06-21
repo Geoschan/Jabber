@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     JabberApplication app;
 
     String nickname;
+    public static MobileArrayAdapter adapter;
+    public static ListView chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ListView chatList = (ListView) findViewById(R.id.chatlist);
-        final String[] MOBILE_OS =
-                new String[] { "Android", "iOS", "WindowsMobile", "Blackberry"};
-        chatList.setAdapter(new MobileArrayAdapter(this, MOBILE_OS));
+        chatList = (ListView) findViewById(R.id.chatlist);
+        ArrayList<String> contacts= null;
+        try {
+            contacts = Server.getServer().listFriends(app.getNickname(), app.getPassword());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        adapter = new MobileArrayAdapter(this, contacts);
+        chatList.setAdapter(adapter);
 
         //nickname übergeben
         if(getIntent().getStringExtra("nickname")!=null){
