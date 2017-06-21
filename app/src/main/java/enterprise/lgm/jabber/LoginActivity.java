@@ -18,9 +18,9 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     EditText nicknameShared=null;
     EditText passwordShared=null;
-    String nickRegistry;
-    String nickname;
-    String password;
+    public static String nickRegistry;
+    public static String nickname;
+    public static String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,9 @@
 package enterprise.lgm.jabber;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,15 +20,13 @@ import java.util.ArrayList;
 
 public class FriendsActivity extends AppCompatActivity {
 
-    private String nickname = "";
+    private String FriendNickname = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            System.out.println(Server.getServer().listFriends("dummy", "dummy"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -35,22 +35,12 @@ public class FriendsActivity extends AppCompatActivity {
         final ListView friendList = (ListView) findViewById(R.id.friendsList);
         ArrayList<String> myList = null;
         try {
-            myList = Server.getServer().listFriends("dummy", "dummy");
+            myList = Server.getServer().listFriends(LoginActivity.nickname, LoginActivity.password);
         } catch (IOException e) {
             e.printStackTrace();
         }
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(FriendsActivity.this, android.R.layout.simple_list_item_1, myList );
         friendList.setAdapter(adapter);
-
-        // Notificationtest
-        try{
-        Server.getServer().addFriend("dummy", "dummy", "Geosch");
-
-            Server.getServer().sendMessage("dummy","Geosch","bla","abc");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Server.getServer().notificationGenerator(FriendsActivity.this,"You've got a new message from "+"Geosch","bla");
 
         final FloatingActionButton addFriend = (FloatingActionButton) findViewById(R.id.addFriend);
         addFriend.setOnClickListener(new View.OnClickListener() {
@@ -66,13 +56,13 @@ public class FriendsActivity extends AppCompatActivity {
                         "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                nickname = input.getText().toString();
-                                if(nickname== null || nickname == "" || nickname.isEmpty()){
+                                FriendNickname = input.getText().toString();
+                                if(FriendNickname== null || FriendNickname == "" || FriendNickname.isEmpty()){
                                     AlertBuilder.alertSingleChoice("Please enter a nickname", "OK", FriendsActivity.this);
                                 }
                                 else{
                                     try {
-                                        Server.getServer().addFriend("dummy", "dummy", nickname);
+                                        Server.getServer().addFriend(LoginActivity.nickname, LoginActivity.password, FriendNickname);//shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
                                         adapter.notifyDataSetChanged();
                                         friendList.invalidateViews();
                                         recreate();
