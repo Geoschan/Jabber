@@ -14,11 +14,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +36,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final ListView chatList = (ListView) findViewById(R.id.chatlist);
+        final String[] MOBILE_OS =
+                new String[] { "Android", "iOS", "WindowsMobile", "Blackberry"};
+        chatList.setAdapter(new MobileArrayAdapter(this, MOBILE_OS));
 
         //nickname übergeben
         if(getIntent().getStringExtra("nickname")!=null){
