@@ -14,11 +14,16 @@ import enterprise.lgm.jabber.LoginActivity;
 public class User {
     public static String nickname;
     public static ArrayList<Friend> friends;
+    public static SharedPreferences shared;
 
     public User (String nickname, ArrayList<Friend> friends) {
         this.nickname = nickname;
         //TODO get ArrayList friends from Server
         //TODO check for internet connection before and fill list from shared preferences if no con available
         this.friends = friends;
+    }
+
+    public void setSharedPrefs(SharedPreferences shared) {
+        this.shared = shared;
     }
 }

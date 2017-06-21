@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
+import enterprise.lgm.jabber.entities.User;
+
 import static android.widget.TextView.BufferType.EDITABLE;
 
 public class LoginActivity extends AppCompatActivity {
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login()
     {
         SharedPreferences shared= getPreferences(Context.MODE_PRIVATE);
+        User.shared = shared;
         SharedPreferences.Editor editor = shared.edit();
         nicknameShared = (EditText) findViewById(R.id.loginNickname);
         nickname = nicknameShared.getText().toString();
