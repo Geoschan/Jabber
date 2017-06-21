@@ -24,23 +24,23 @@ public class JabberApplication extends Application{
         this.prefs = context.getSharedPreferences("loginData",Context.MODE_PRIVATE);
     }
 
-    public void setNicknameInPrefs(String nickname) {
+    public void setNickname(String nickname) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("nickname",nickname);
         editor.commit();
     }
 
-    public String getNicknameFromPrefs() {
+    public String getNickname() {
         return prefs.getString("nickname", null);
     }
 
-    public void setPasswordInPrefs(String password) {
+    public void setPassword(String password) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("password",password);
         editor.commit();
     }
 
-    public String getPasswordFromPrefs() {
+    public String getPassword() {
         return prefs.getString("password", null);
     }
 }

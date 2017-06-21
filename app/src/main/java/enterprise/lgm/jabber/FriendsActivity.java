@@ -42,7 +42,7 @@ public class FriendsActivity extends AppCompatActivity {
         final ListView friendList = (ListView) findViewById(R.id.friendsList);
         ArrayList<String> myList = null;
         try {
-            myList = Server.getServer().listFriends(LoginActivity.nickname, LoginActivity.password);
+            myList = Server.getServer().listFriends(app.getNickname(), app.getPassword());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class FriendsActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         String selectedFromList =(String) (friendList.getItemAtPosition(position));
                                         try {
-                                            Server.getServer().removeFriend(LoginActivity.nickname, LoginActivity.password, selectedFromList);
+                                            Server.getServer().removeFriend(app.getNickname(), app.getPassword(), selectedFromList);
                                             adapter.notifyDataSetChanged();
                                             friendList.invalidateViews();
                                             recreate();
@@ -113,7 +113,8 @@ public class FriendsActivity extends AppCompatActivity {
                                 }
                                 else{
                                     try {
-                                        Server.getServer().addFriend(LoginActivity.nickname, LoginActivity.password, FriendNickname);//shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
+                                        Server.getServer().addFriend(app.getNickname(), app.getPassword(), FriendNickname);
+                                        //shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
                                         adapter.notifyDataSetChanged();
                                         friendList.invalidateViews();
                                         recreate();
