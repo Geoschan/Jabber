@@ -30,14 +30,13 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.loginNickname).requestFocus();
 
         nicknameET = (EditText) findViewById(R.id.loginNickname);
-        if(app.getNickname()!=null) nicknameET.setText(app.getNickname());
         passwordET = (EditText) findViewById(R.id.loginPassword);
-        if(app.getPassword() != null) passwordET.setText(app.getPassword());
 
-        if(getIntent().getStringExtra("nickname") != null) {
-            String nickFromRegister = getIntent().getStringExtra("nickname");
-            nicknameET.setText(nickFromRegister);
-        }
+        //part of auto login
+        if(app.getNickname()!=null) nicknameET.setText(app.getNickname());
+        if(app.getPassword() != null) passwordET.setText(app.getPassword());
+        boolean auto = true;
+        login();
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin2);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,5 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("nickname: " + app.getNickname());
-        System.out.println("password: " + app.getPassword());
     }
 }

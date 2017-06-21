@@ -20,6 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         app = (JabberApplication)getApplication();
+        app.setContext(this);
 
         Button btnRegister = (Button) findViewById(R.id.btnLogin2);
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -28,12 +29,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                 EditText nickname = (EditText) findViewById(R.id.registerNickname);
                 String user = nickname.getText().toString();
+                app.setNickname(user);
 
                 EditText password1 = (EditText) findViewById(R.id.loginPassword);
                 String pw1 = password1.getText().toString();
 
                 EditText password2 = (EditText) findViewById(R.id.registerPasswordRepeat);
                 String pw2 = password2.getText().toString();
+                app.setPassword(pw2);
 
                 //Alert if passwords are not equal
                 if (!(pw1.equals(pw2))) {

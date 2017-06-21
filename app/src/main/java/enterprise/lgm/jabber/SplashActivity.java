@@ -17,6 +17,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         app = (JabberApplication)getApplication();
+        app.setContext(this);
+
+        //part of auto login
+        if (app.getNickname() != null && app.getPassword() != null) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void gotoLogin(View v)
