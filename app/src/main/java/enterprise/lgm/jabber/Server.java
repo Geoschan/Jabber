@@ -28,6 +28,8 @@ public class Server {
     //Server instance can be accessed from everywhere with Server.getServer()
     private static Server server;
 
+    JabberApplication app;
+
     private Server() {
 
     }
@@ -39,6 +41,9 @@ public class Server {
         return Server.server;
     }
 
+    public void setApplication(JabberApplication app) {
+        this.app = app;
+    }
 
     //methods for server related functions
     //Profile

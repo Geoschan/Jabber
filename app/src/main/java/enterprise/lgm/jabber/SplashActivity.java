@@ -9,11 +9,14 @@ import java.io.IOException;
 
 public class SplashActivity extends AppCompatActivity {
 
+    JabberApplication app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        app = (JabberApplication)getApplication();
     }
 
     public void gotoLogin(View v)

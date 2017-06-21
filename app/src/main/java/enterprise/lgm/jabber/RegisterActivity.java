@@ -10,7 +10,7 @@ import android.widget.EditText;
 import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    public JabberApplication app;
 
 
 
@@ -19,6 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        app = (JabberApplication)getApplication();
 
         Button btnRegister = (Button) findViewById(R.id.btnLogin2);
         btnRegister.setOnClickListener(new View.OnClickListener() {

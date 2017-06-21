@@ -11,11 +11,11 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
-import enterprise.lgm.jabber.entities.User;
-
 import static android.widget.TextView.BufferType.EDITABLE;
 
 public class LoginActivity extends AppCompatActivity {
+    public JabberApplication app;
+
     SharedPreferences shared;
     SharedPreferences.Editor editor;
     EditText nicknameShared=null;
@@ -26,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        app = (JabberApplication)getApplication();
+        app.setContext(this);
+        Server.getServer().setApplication(app);
+
         SharedPreferences shared= getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-         login();
+                login();
             }
         });
         }
@@ -66,20 +70,12 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void login()
-    {
-        SharedPreferences shared= getPreferences(Context.MODE_PRIVATE);
-        User.shared = shared;
-        SharedPreferences.Editor editor = shared.edit();
-        nicknameShared = (EditText) findViewById(R.id.loginNickname);
-        nickname = nicknameShared.getText().toString();
-        passwordShared = (EditText) findViewById(R.id.loginPassword);
-        password = passwordShared.getText().toString();
-
-        //Shared Preferences werden je nach Eingabe geändert
-           editor.putString("nickname", nicknameShared.getText().toString());
-           editor.putString("password", passwordShared.getText().toString());
-           editor.apply();
+    public void login() {
+        //write nickname and password to prefs via JabberApplication
+        EditText sharedNickname = (EditText) findViewById(R.id.loginNickname);
+        app.setNicknameInPrefs(sharedNickname.getText().toString());
+        EditText sharedPassword = (EditText) findViewById(R.id.loginPassword);
+        app.setPasswordInPrefs(sharedPassword.getText().toString());
 
         try {
             String message = Server.getServer().login(nickname, password);
@@ -95,5 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("nickname: " + app.getNicknameFromPrefs());
+        System.out.println("password: " + app.getPasswordFromPrefs());
     }
 }

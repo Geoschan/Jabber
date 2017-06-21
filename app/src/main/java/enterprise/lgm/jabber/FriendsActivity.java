@@ -23,16 +23,19 @@ import java.util.ArrayList;
 
 public class FriendsActivity extends AppCompatActivity {
 
+    JabberApplication app;
+
     private String FriendNickname = "";
     int position = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
+        app = (JabberApplication)getApplication();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

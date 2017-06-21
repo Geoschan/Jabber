@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-import enterprise.lgm.jabber.entities.User;
-
 /**
  * Created by marvi on 21.06.2017.
  */
@@ -18,16 +16,31 @@ import enterprise.lgm.jabber.entities.User;
 public class JabberApplication extends Application{
     private SharedPreferences prefs;
     private Context context;
-    private User user;
+
+
 
     public void setContext(Context context) {
         this.context = context;
-        //TODO set shared Prefs
-//        SharedPreferences shared = context.getSharedPreferences(Context.MODE_PRIVATE);
-//        this.prefs = shared;
+        this.prefs = context.getSharedPreferences("loginData",Context.MODE_PRIVATE);
     }
 
-    public void setPrefs(SharedPreferences prefs) {
-        this.prefs = prefs;
+    public void setNicknameInPrefs(String nickname) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("nickname",nickname);
+        editor.commit();
+    }
+
+    public String getNicknameFromPrefs() {
+        return prefs.getString("nickname", null);
+    }
+
+    public void setPasswordInPrefs(String password) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("password",password);
+        editor.commit();
+    }
+
+    public String getPasswordFromPrefs() {
+        return prefs.getString("password", null);
     }
 }
