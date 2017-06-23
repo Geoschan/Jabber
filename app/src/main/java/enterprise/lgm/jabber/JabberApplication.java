@@ -43,4 +43,11 @@ public class JabberApplication extends Application{
     public String getPassword() {
         return prefs.getString("password", null);
     }
+
+    public void clearLoginData() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.commit();
+
+    }
 }

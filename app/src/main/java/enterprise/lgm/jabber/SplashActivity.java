@@ -23,6 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         if (app.getNickname() != null && app.getPassword() != null) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -30,11 +31,13 @@ public class SplashActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void gotoRegister(View v)
     {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 }

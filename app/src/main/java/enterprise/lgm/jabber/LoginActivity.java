@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         //part of auto login
         if(app.getNickname()!=null) nicknameET.setText(app.getNickname());
         if(app.getPassword() != null) passwordET.setText(app.getPassword());
-        boolean auto = true;
         login();
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin2);
@@ -65,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("nickname", app.getNickname());
                 startActivity(intent);
+                finish();
             }else if (message.contains("0")){
                 AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);
             }else{
