@@ -32,10 +32,16 @@ public class LoginActivity extends AppCompatActivity {
         nicknameET = (EditText) findViewById(R.id.loginNickname);
         passwordET = (EditText) findViewById(R.id.loginPassword);
 
-        //part of auto login
-        if(app.getNickname()!=null) nicknameET.setText(app.getNickname());
-        if(app.getPassword() != null) passwordET.setText(app.getPassword());
-        login();
+//        //part of auto login
+//        if(app.getNickname()!=null) nicknameET.setText(app.getNickname());
+//        if(app.getPassword() != null) passwordET.setText(app.getPassword());
+//        login();
+
+        if (app.getNickname() != null && app.getPassword() != null) {
+            nicknameET.setText(app.getNickname());
+            passwordET.setText(app.getPassword());
+            login();
+        }
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin2);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -53,10 +59,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
         //write nickname and password to prefs via JabberApplication
-        EditText sharedNickname = (EditText) findViewById(R.id.loginNickname);
-        app.setNickname(sharedNickname.getText().toString());
-        EditText sharedPassword = (EditText) findViewById(R.id.loginPassword);
-        app.setPassword(sharedPassword.getText().toString());
+        app.setNickname(nicknameET.getText().toString());
+        app.setPassword(passwordET.getText().toString());
 
         try {
             String message = Server.getServer().login(app.getNickname(), app.getPassword());

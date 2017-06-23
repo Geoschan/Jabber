@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity
             app.clearLoginData();
             Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
