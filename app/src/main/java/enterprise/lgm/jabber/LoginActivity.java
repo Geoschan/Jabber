@@ -64,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             String message = Server.getServer().login(app.getNickname(), app.getPassword());
-            if(message.contains("1")){
+            if(message.contains("\"MsgType\":1")){
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("nickname", app.getNickname());
                 startActivity(intent);
                 finish();
-            }else if (message.contains("0")){
+            }else if (message.contains("\"MsgType\":0")){
                 AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);
             }else{
                 AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", LoginActivity.this);
