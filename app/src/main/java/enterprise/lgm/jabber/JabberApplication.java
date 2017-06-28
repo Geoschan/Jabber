@@ -5,6 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
+import enterprise.lgm.jabber.entities.Friend;
+
 
 /**
  * Created by marvi on 21.06.2017.
@@ -16,6 +20,8 @@ import android.content.SharedPreferences;
 public class JabberApplication extends Application{
     private SharedPreferences prefs;
     private Context context;
+    public static ArrayList<Friend> friends = new ArrayList<Friend>();
+
 
 
 

@@ -11,10 +11,10 @@ public class Message {
     public Friend sender;
     public Date date;
 
-    public Message (String text, Friend sender, Date date) {
+    public Message (String text){//, Friend sender, Date date) {
         //TODO fill with information from shared prefs or from server
         this.text = text;
-        this.sender = sender;
-        this.date = date;
+       // this.sender = sender;
+       // this.date = date;
     }
 }

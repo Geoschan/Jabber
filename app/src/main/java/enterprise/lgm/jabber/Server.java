@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.*;
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
@@ -153,7 +154,7 @@ public class Server {
     }
 
 
-    public String changePassword(final String user, final String pwOld,final String pwNew) throws IOException {
+    public String changePassword(final String user, final String pwOld, final String pwNew) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
         final String[] registerAnswer = new String[1];
 
@@ -204,7 +205,7 @@ public class Server {
         return registerAnswer[0];
     }
 
-    public String refreshToken(final String user, final String pw,final String token) throws IOException {
+    public String refreshToken(final String user, final String pw, final String token) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
         final String[] registerAnswer = new String[1];
 
@@ -257,7 +258,7 @@ public class Server {
 
     //Messages
 
-    public String sendMessage(final String userFrom,final String userTo, final String message, final String pw) throws IOException {
+    public String sendMessage(final String userFrom, final String userTo, final String message, final String pw) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
         final String[] registerAnswer = new String[1];
 
@@ -308,9 +309,9 @@ public class Server {
         return registerAnswer[0];
     }
 
-    public String getMessage(final String userFrom,final String userTo,final String pw) throws IOException {
+    public JSONArray getMessage(final String user, final String friend, final String pw) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
-        final String[] registerAnswer = new String[1];
+        final JSONObject[] registerAnswer = new JSONObject[1];
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -319,7 +320,7 @@ public class Server {
                 try {
                     url = new URL("http://palaver.se.paluno.uni-due.de/api/message/get");
 
-                    String par = "{\"Username\":\"" + userFrom + "\",\"Password\":\"" + pw + "\",\"Recipient\":\"" + userTo + "\" }";
+                    String par = "{\"Username\":\"" + user + "\",\"Password\":\"" + pw + "\",\"Recipient\":\"" + friend + "\" }";
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json");
@@ -334,8 +335,19 @@ public class Server {
                     String ausgabe = "";
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
-                    registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    System.out.println("string " + ausgabe);
+                    JSONObject object = null;
+                    try {
+                        object = new JSONObject(ausgabe);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    registerAnswer[0] = object;
+                    try {
+                        System.out.println("registerAnswer: (INNER) " + registerAnswer[0].getString("Data"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -356,8 +368,17 @@ public class Server {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return registerAnswer[0];
+
+        JSONArray arr = null;
+        try {
+            arr = registerAnswer[0].getJSONArray("Data");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return arr;
     }
+
+
 
     public String getOffsetMessage(final String userFrom,final String userTo,final String pw,final String date) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
@@ -385,6 +406,7 @@ public class Server {
                     String ausgabe = "";
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
+
                     registerAnswer[0] = ausgabe;
                     System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();

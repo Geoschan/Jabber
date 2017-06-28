@@ -24,7 +24,11 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+
+import enterprise.lgm.jabber.entities.Friend;
+import enterprise.lgm.jabber.entities.Message;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,17 +47,22 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         app = (JabberApplication)getApplication();
 
+        createFriends();
+        for(Friend f: JabberApplication.friends){
+            for(Message m: f.messages){
+                System.out.println("Message : "+m.text);
+            }
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         chatList = (ListView) findViewById(R.id.chatlist);
-        ArrayList<String> contacts= null;
-        try {
-            contacts = Server.getServer().listFriends(app.getNickname(), app.getPassword());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+        ArrayList<String> contacts = new ArrayList<String>();
+        for(Friend f:JabberApplication.friends){
+            contacts.add(f.nickname);
+        }
         adapter = new MobileArrayAdapter(this, contacts);
         chatList.setAdapter(adapter);
         chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,5 +170,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void createFriends(){
+        try {
+            ArrayList<String> contacts= Server.getServer().listFriends(app.getNickname(), app.getPassword());
+            for(String s: contacts){
+                JabberApplication.friends.add(new Friend(s, app));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
