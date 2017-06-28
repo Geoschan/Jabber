@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import enterprise.lgm.jabber.entities.Friend;
@@ -21,7 +22,7 @@ public class JabberApplication extends Application{
     private SharedPreferences prefs;
     private Context context;
     public static ArrayList<Friend> friends = new ArrayList<Friend>();
-
+    public int notificationId = 1;
 
 
 
@@ -55,5 +56,13 @@ public class JabberApplication extends Application{
         editor.clear();
         editor.commit();
 
+    }
+
+    public void sendTokenToServer(String token) {
+        try {
+            Server.getServer().refreshToken(this.getNickname(),this.getPassword(),token);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
