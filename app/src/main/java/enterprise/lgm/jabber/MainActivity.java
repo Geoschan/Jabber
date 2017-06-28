@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,15 +30,17 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     JabberApplication app;
 
+    int position = 0;
     String nickname;
     public static MobileArrayAdapter adapter;
     public static ListView chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         app = (JabberApplication)getApplication();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,6 +56,19 @@ public class MainActivity extends AppCompatActivity
 
         adapter = new MobileArrayAdapter(this, contacts);
         chatList.setAdapter(adapter);
+        chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int pos, long id) {
+                position = pos;
+                String selectedFromList =(String) (chatList.getItemAtPosition(position));
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                intent.putExtra("friendname", selectedFromList);
+
+                startActivity(intent);
+            }
+        });
+
 
         //nickname übergeben
         if(getIntent().getStringExtra("nickname")!=null){
