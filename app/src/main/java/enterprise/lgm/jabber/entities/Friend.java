@@ -23,7 +23,7 @@ public class Friend {
         app = App;
         this.nickname = nickname;
         try {
-            JSONArray array = Server.getServer().getMessage(app.getNickname(),nickname, app.getPassword());
+           JSONArray array = Server.getServer().getMessage(app.getNickname(),nickname, app.getPassword());
            for(int i= 0; i<array.length();i++){
                try {
                    JSONObject object = array.getJSONObject(i);
@@ -32,11 +32,8 @@ public class Friend {
                    e.printStackTrace();
                }
            }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

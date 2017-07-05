@@ -60,7 +60,7 @@
         </receiver>
 
         <service
-            android:name=".gcm.PalaverGcmListenerService"
+            android:name=".gcm.JabberGcmListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -68,7 +68,7 @@
         </service>
 
         <service
-            android:name=".gcm.PalaverInstanceIDListenerService"
+            android:name=".gcm.JabberInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />

@@ -11,7 +11,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import enterprise.lgm.jabber.ChatActivity;
 import enterprise.lgm.jabber.JabberApplication;
 
-public class PalaverGcmListenerService extends GcmListenerService {
+public class JabberGcmListenerService extends GcmListenerService {
     @Override public void onMessageReceived(String from, Bundle data) {
         JabberApplication app = ((JabberApplication)getApplication());
         app.setContext(this);
