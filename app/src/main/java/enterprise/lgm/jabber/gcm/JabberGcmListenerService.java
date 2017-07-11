@@ -17,7 +17,7 @@ public class JabberGcmListenerService extends GcmListenerService {
         app.setContext(this);
 
         Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra("friend", data.getString("sender"));
+        intent.putExtra("friendname", data.getString("sender"));
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
                         this,
@@ -30,7 +30,9 @@ public class JabberGcmListenerService extends GcmListenerService {
                 .setSmallIcon(android.R.drawable.ic_dialog_email)
                 .setContentTitle("Neue Nachricht von " + data.getString("sender"))
                 .setContentText(data.getString("preview"))
-                .setContentIntent(resultPendingIntent);
+                .setContentIntent(resultPendingIntent).setAutoCancel(true);
+
+
 
         int mNotificationId = app.notificationId++;
         NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
