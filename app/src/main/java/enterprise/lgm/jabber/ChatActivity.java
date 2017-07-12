@@ -1,5 +1,6 @@
 package enterprise.lgm.jabber;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,19 +38,10 @@ public class ChatActivity extends AppCompatActivity {
         TextView textFriendName = (TextView)findViewById(R.id.friendName);
         textFriendName.setText(friendname);
 
-        final ListView chatList = (ListView) findViewById(R.id.msgListView);
-        ArrayList<Message> messages = null;
-        ArrayList<String> nachrichten = new ArrayList<String>();
-        try {
-            messages = Server.getServer().getMessage(app.getNickname(), friendname, app.getPassword());
-            for(Message m: messages){
-                nachrichten.add(m.text);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(ChatActivity.this, android.R.layout.simple_list_item_1, nachrichten);
-        chatList.setAdapter(adapter);
+        updateList();
+
+
+
 
         ImageButton sendMessageButton = (ImageButton) findViewById(R.id.sendMessageButton);
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
                 EditText messageField = (EditText) findViewById(R.id.messageEditText);
                 try {
                     Server.getServer().sendMessage(app.getNickname(),friendname,messageField.getText().toString(),app.getPassword());
+                    updateList();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -65,5 +58,39 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void updateList(){
+        final ListView chatList = (ListView) findViewById(R.id.msgListView);
+        ArrayList<Message> messages = null;
+        ArrayList<String> nachrichten = new ArrayList<String>();
+        try {
+            messages = Server.getServer().getMessage(app.getNickname(), friendname, app.getPassword());
+            for(Message m: messages){
+                nachrichten.add(m.text +"  " +m.date);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(ChatActivity.this, R.layout.message_list, nachrichten);
+        chatList.setAdapter(adapter);
+
+        ((TextView)chatList.getAdapter().getView(2,null,chatList)).setText("idi nahui");
+
+
+    }
+
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 }
