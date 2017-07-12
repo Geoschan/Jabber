@@ -24,6 +24,7 @@ public class JabberApplication extends Application{
     public static ArrayList<Friend> friends = new ArrayList<Friend>();
     public int notificationId = 1;
 
+
     
 
     public void setContext(Context context) {

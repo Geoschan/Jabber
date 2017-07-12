@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Message {
     public String text;
-    public Friend sender;
+    public boolean sender;
     public Date date;
 
     public Message (String text){//, Friend sender, Date date) {
@@ -20,9 +20,10 @@ public class Message {
        // this.date = date;
     }
 
-    public Message (String text, Friend sender, String date) throws ParseException {
+    public Message (String text, boolean sender, String date) throws ParseException {
         this.text = text;
-        this.date = parse(date);
+       // this.date = parse(date);
+        this.sender = sender;
     }
 
     public static Date parse( String input ) throws java.text.ParseException {

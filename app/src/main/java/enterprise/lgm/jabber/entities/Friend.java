@@ -22,18 +22,18 @@ public class Friend {
     public Friend(String nickname, JabberApplication App) {
         app = App;
         this.nickname = nickname;
-        try {
-           JSONArray array = Server.getServer().getMessage(app.getNickname(),nickname, app.getPassword());
-           for(int i= 0; i<array.length();i++){
+     /*   try {
+           ArrayList<String> array = Server.getServer().getMessage(app.getNickname(),nickname, app.getPassword());
+           for(int i= 0; i<array.size();i++){
                try {
-                   JSONObject object = array.getJSONObject(i);
-                   messages.add(new Message(object.getString("Data")));
+                  // JSONObject object = array.getJSONObject(i);
+                  // messages.add(new Message(object.getString("Data")));
                } catch (JSONException e) {
                    e.printStackTrace();
                }
            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -14,8 +14,11 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.*;
 import java.sql.SQLOutput;
+import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+
+import enterprise.lgm.jabber.entities.Message;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -309,7 +312,7 @@ public class Server {
         return registerAnswer[0];
     }
 
-    public JSONArray getMessage(final String user, final String friend, final String pw) throws IOException {
+    public ArrayList<Message> getMessage(final String user, final String friend, final String pw) throws IOException {
         final CountDownLatch latch = new CountDownLatch(1);
         final JSONObject[] registerAnswer = new JSONObject[1];
 
@@ -372,11 +375,27 @@ public class Server {
         JSONArray arr = null;
         try {
             arr = registerAnswer[0].getJSONArray("Data");
+            ArrayList<Message> list = new ArrayList<Message>();
+            for(int i = 0; i < arr.length(); i++) {
+                JSONObject object = (JSONObject) arr.get(i);
+                boolean sender = false;
+                if(object.getString("Sender").equals(user)){
+                    sender=true;
+                }
+                try {
+                    Message mess = new Message(object.getString("Data"), sender, object.getString("DateTime"));
+                    list.add(mess);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                };
+            }
+           return list;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return arr;
+        return null;
     }
+
 
 
 
