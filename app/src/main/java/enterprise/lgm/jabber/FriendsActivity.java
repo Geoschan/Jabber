@@ -115,15 +115,23 @@ public class FriendsActivity extends AppCompatActivity {
                                 }
                                 else{
                                     try {
-                                        Server.getServer().addFriend(app.getNickname(), app.getPassword(), FriendNickname);
+                                        String message=Server.getServer().addFriend(app.getNickname(), app.getPassword(), FriendNickname);
                                         //shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
                                         adapter.notifyDataSetChanged();
                                         friendList.invalidateViews();
                                         MainActivity.adapter = new MobileArrayAdapter(FriendsActivity.this, Server.getServer().listFriends(app.getNickname(), app.getPassword()));
                                         MainActivity.chatList.setAdapter(MainActivity.adapter);
                                         recreate();
-                                        Toast.makeText(FriendsActivity.this, "Friend succesfully added!",
-                                                Toast.LENGTH_LONG).show();
+                                        if(message.contains("\"MsgType\":1"))
+                                        {
+                                            Toast.makeText(FriendsActivity.this, "Friend succesfully added!",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                        else if(message.contains("\"MsgType\":0"))
+                                        {
+                                            Toast.makeText(FriendsActivity.this, "User does not exist!",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
