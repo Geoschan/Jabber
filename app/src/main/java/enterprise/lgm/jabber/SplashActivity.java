@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                 apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
                         .show();
             } else {
-                System.out.println("This device is not supported by Google Play Services.");
+                AlertBuilder.alertSingleChoice("This device is not supported by Google Play Services.", "OK", SplashActivity.this);
                 finish();
             }
             return false;

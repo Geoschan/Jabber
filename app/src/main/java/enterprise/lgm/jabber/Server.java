@@ -626,20 +626,5 @@ public class Server {
         return null;
     }
 
-    protected void notificationGenerator(Context context,String title, String text)
-    {
-        Intent intent = new Intent(context, FriendsActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        //Icon fehlt mir
-        Notification n  = new Notification.Builder(context).
-                setContentTitle(title+""+"" )
-                .setContentText(text)
-                .setContentIntent(pIntent)
-                .setAutoCancel(true)
-                .setSmallIcon(android.R.drawable.ic_dialog_email).build();
-
-        NotificationManager notificationManager = (NotificationManager)  context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, n);
-    }
 }
 
