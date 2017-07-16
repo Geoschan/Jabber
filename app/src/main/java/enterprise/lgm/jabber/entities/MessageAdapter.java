@@ -40,16 +40,14 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             if(getItemViewType(position)==0)
             {
                 convertView= LayoutInflater.from(context).inflate( R.layout.message_list,parent,false);
-                //TextView textView = (TextView) convertView.findViewById(R.id.label);
-                //textView.setText("chat.messages.get(position). text+" +""+ " +chat.messages.get(position).date");
             }
             else  if(getItemViewType(position)==1)
             {
                 convertView= LayoutInflater.from(context).inflate( R.layout.message_list2,parent,false);
-               // TextView textView = (TextView) convertView.findViewById(R.id.text1);
-               // textView.setText(messages.get(position).text+"  " +messages.get(position).date);
             }
         }
+        TextView textView = (TextView) convertView.findViewById(R.id.message);
+        textView.setText(messages.get(position).text+"  " +messages.get(position).date);
         return convertView;
     }
 

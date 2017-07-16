@@ -34,9 +34,6 @@ public class ChatActivity extends AppCompatActivity {
 
         updateList();
 
-
-
-
         ImageButton sendMessageButton = (ImageButton) findViewById(R.id.sendMessageButton);
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,30 +54,20 @@ public class ChatActivity extends AppCompatActivity {
     public void updateList(){
         final ListView chatList = (ListView) findViewById(R.id.msgListView);
         ArrayList<Message> messages = null;
-        ArrayList<String> nachrichten = new ArrayList<String>();
+        //ArrayList<String> nachrichten = new ArrayList<String>();
         try {
             messages = Server.getServer().getMessage(app.getNickname(), friendname, app.getPassword());
-            for(Message m: messages){
-                nachrichten.add(m.text +"  " +m.date);
-            }
+            //for(Message m: messages){
+            //    nachrichten.add(m.text +"  " +m.date);
+           // }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-        //TODO MessageAdapter muss angepasst werden: Farbe und Text verbinden
-
-        // Falls Text benötigt wird einfach Farbadapter in Kommentare und bei Nachrichtenadapter Kommentare entfernen
-
-        // 1. Adapter nur Farben: selbst geschrieben blau, zugesendete Nachricht rot
+        // selbst geschrieben blau, zugesendete Nachricht rot
         final MessageAdapter adapter = new MessageAdapter(ChatActivity.this, R.layout.message_list, messages);
         chatList.setAdapter(adapter);
-
-        //2.Adapter nur Nachrichten
-       // final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(ChatActivity.this, R.layout.message_list, nachrichten);
-        //chatList.setAdapter(adapter2);
     }
-
 
     public View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
