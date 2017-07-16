@@ -13,10 +13,14 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import enterprise.lgm.jabber.entities.Message;
+import enterprise.lgm.jabber.entities.MessageAdapter;
 
 public class ChatActivity extends AppCompatActivity {
     String friendname;
     JabberApplication app;
+    public ArrayList<Message> messages;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +67,18 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(ChatActivity.this, R.layout.message_list, nachrichten);
+
+        //TODO MessageAdapter muss angepasst werden: Farbe und Text verbinden
+
+        // Falls Text benötigt wird einfach Farbadapter in Kommentare und bei Nachrichtenadapter Kommentare entfernen
+
+        // 1. Adapter nur Farben: selbst geschrieben blau, zugesendete Nachricht rot
+        final MessageAdapter adapter = new MessageAdapter(ChatActivity.this, R.layout.message_list, messages);
         chatList.setAdapter(adapter);
 
-        //((TextView)chatList.getAdapter().getView(2,null,chatList)).setText("idi nahui");
-
-
+        //2.Adapter nur Nachrichten
+       // final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(ChatActivity.this, R.layout.message_list, nachrichten);
+        //chatList.setAdapter(adapter2);
     }
 
 
