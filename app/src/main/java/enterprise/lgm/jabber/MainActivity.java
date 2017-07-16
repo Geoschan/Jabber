@@ -1,7 +1,6 @@
 package enterprise.lgm.jabber;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,16 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import enterprise.lgm.jabber.entities.Friend;
@@ -164,6 +162,7 @@ public class MainActivity extends AppCompatActivity
             app.clearLoginData();
             Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(intent);
+            app.setNotificationBoolean(false);
             finish();
         }
 

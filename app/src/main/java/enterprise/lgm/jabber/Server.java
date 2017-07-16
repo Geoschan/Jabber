@@ -1,26 +1,15 @@
 package enterprise.lgm.jabber;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.*;
 import java.net.*;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 import enterprise.lgm.jabber.entities.Message;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Created by Lutz on 24.05.2017.
@@ -77,7 +66,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    //System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -132,7 +121,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    //System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -184,7 +173,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    //System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -235,7 +224,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                   // System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -288,7 +277,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                   // System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -346,11 +335,12 @@ public class Server {
                         e.printStackTrace();
                     }
                     registerAnswer[0] = object;
-                    try {
+                    /*try {
                         System.out.println("registerAnswer: (INNER) " + registerAnswer[0].getString("Data"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    */
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -427,7 +417,7 @@ public class Server {
                         ausgabe += (char) c;
 
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                   // System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -479,7 +469,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                   // System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -530,7 +520,7 @@ public class Server {
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
                     registerAnswer[0] = ausgabe;
-                    System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
+                    //System.out.println("registerAnswer: (INNER) " + registerAnswer[0]);
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {
@@ -588,11 +578,12 @@ public class Server {
                         e.printStackTrace();
                     }
                     registerAnswer[0] = object;
-                    try {
+                    /*try {
                         System.out.println("registerAnswer: (INNER) " + registerAnswer[0].getString("Data"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    */
                     latch.countDown();
 
                 } catch (UnsupportedEncodingException e1) {

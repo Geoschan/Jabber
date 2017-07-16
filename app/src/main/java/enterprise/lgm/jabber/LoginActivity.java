@@ -1,6 +1,4 @@
 package enterprise.lgm.jabber;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+
 
 import java.io.IOException;
 
@@ -18,7 +15,6 @@ import static android.widget.TextView.BufferType.EDITABLE;
 
 public class LoginActivity extends AppCompatActivity {
     public JabberApplication app;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     EditText nicknameET;
     EditText passwordET;
@@ -67,14 +63,9 @@ public class LoginActivity extends AppCompatActivity {
         app.setPassword(passwordET.getText().toString());
 
         try {
-            if(checkPlayServices())
-            {
-                Intent msgIntent = new Intent(this, TokenService.class);
-                startService(msgIntent);
-            }
-
             String message = Server.getServer().login(app.getNickname(), app.getPassword());
             if(message.contains("\"MsgType\":1")){
+                app.setNotificationBoolean(true);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("nickname", app.getNickname());
                 startActivity(intent);
@@ -89,19 +80,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                AlertBuilder.alertSingleChoice("This device is not supported by Google Play Services.", "OK", LoginActivity.this);
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
 }

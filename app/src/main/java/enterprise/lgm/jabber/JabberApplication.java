@@ -66,4 +66,18 @@ public class JabberApplication extends Application{
             e.printStackTrace();
         }
     }
+
+    public void setNotificationBoolean(boolean notify)
+    {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("notify",notify);
+        editor.commit();
+    }
+
+    public boolean getNotificationBoolean( )
+    {
+        return prefs.getBoolean("notify", false);
+    }
+
+
 }
