@@ -63,13 +63,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/form"
-        android:layout_below="@+id/friendName"
         android:background="@color/cast_expanded_controller_progress_text_color"
         android:cacheColorHint="@color/ColorPrimary"
         android:divider="@color/cast_expanded_controller_background_color"
         android:dividerHeight="1dp"
         android:paddingBottom="10dp"
-        android:text="blabla" />
+        android:text="blabla"
+        android:layout_below="@+id/friendName" />
 
     <LinearLayout
         android:id="@+id/form"

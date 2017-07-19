@@ -47,7 +47,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             }
         }
         TextView textView = (TextView) convertView.findViewById(R.id.message);
-        textView.setText(messages.get(position).text+"  " +messages.get(position).date);
+        textView.setText(messages.get(position).text+System.lineSeparator()+messages.get(position).date);
         return convertView;
     }
 

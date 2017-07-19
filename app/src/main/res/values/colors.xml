@@ -3,8 +3,8 @@
 
     <color name="ColorPrimary">#ff8800</color>
     <color name="ColorPrimaryDark">#9d5600</color>
-    <color name="ColorOut">#ffab00</color>
-    <color name="ColorIn">#88E1F4</color>
+    <color name="ColorIn">#4Dffab00</color>
+    <color name="ColorOut">#4D88E1F4</color>
 
 
 </resources>

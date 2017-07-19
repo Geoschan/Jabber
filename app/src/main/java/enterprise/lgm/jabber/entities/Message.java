@@ -31,7 +31,7 @@ public class Message {
         String datum = parts[0];
         String uhrzeit = parts[1];
         String uhrzeit2 = uhrzeit.substring(0,5);
-        String gesamt = "                                   "+datum + " um: "+ uhrzeit2;
+        String gesamt =datum + " um: "+ uhrzeit2;
        return gesamt;
     }
 }

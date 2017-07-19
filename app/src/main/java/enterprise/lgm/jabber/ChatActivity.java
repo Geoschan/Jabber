@@ -67,6 +67,19 @@ public class ChatActivity extends AppCompatActivity {
         // selbst geschrieben blau, zugesendete Nachricht rot
         final MessageAdapter adapter = new MessageAdapter(ChatActivity.this, R.layout.message_list, messages);
         chatList.setAdapter(adapter);
+
+        scrollMyListViewToBottom(chatList);
+
+    }
+
+    private void scrollMyListViewToBottom(final ListView list) {
+        list.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                list.setSelection(list.getAdapter().getCount() - 1);
+            }
+        });
     }
 
     public View getViewByPosition(int pos, ListView listView) {
