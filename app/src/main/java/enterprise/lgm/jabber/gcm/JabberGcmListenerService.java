@@ -10,6 +10,7 @@ import com.google.android.gms.internal.zzagy;
 
 import enterprise.lgm.jabber.ChatActivity;
 import enterprise.lgm.jabber.JabberApplication;
+import enterprise.lgm.jabber.R;
 
 public class JabberGcmListenerService extends GcmListenerService {
 
@@ -38,8 +39,8 @@ public class JabberGcmListenerService extends GcmListenerService {
                     );
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(android.R.drawable.ic_dialog_email)
-                    .setContentTitle("Neue Nachricht von " + data.getString("sender"))
+                    .setSmallIcon(R.drawable.icon)
+                    .setContentTitle(data.getString("sender"))
                     .setContentText(data.getString("preview"))
                     .setContentIntent(resultPendingIntent).setAutoCancel(true);
 
