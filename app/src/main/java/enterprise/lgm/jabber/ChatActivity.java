@@ -19,7 +19,7 @@ public class ChatActivity extends AppCompatActivity {
     String friendname;
     JabberApplication app;
     public ArrayList<Message> messages;
-    public static ChatActivity activity;
+    public static ChatActivity activity = null;
 
 
     @Override

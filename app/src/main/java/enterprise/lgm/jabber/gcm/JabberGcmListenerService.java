@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.android.gms.internal.zzagy;
+
 import enterprise.lgm.jabber.ChatActivity;
 import enterprise.lgm.jabber.JabberApplication;
 
@@ -14,7 +16,14 @@ public class JabberGcmListenerService extends GcmListenerService {
     @Override public void onMessageReceived(String from, Bundle data) {
         JabberApplication app = ((JabberApplication) getApplication());
         app.setContext(this);
-        ChatActivity.activity.updateList();
+        if(ChatActivity.activity!=null) {
+            zzagy.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ChatActivity.activity.updateList();
+                }
+            });
+        }
             Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra("friendname", data.getString("sender"));
 
