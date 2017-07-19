@@ -19,10 +19,12 @@ public class ChatActivity extends AppCompatActivity {
     String friendname;
     JabberApplication app;
     public ArrayList<Message> messages;
+    public static ChatActivity activity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 

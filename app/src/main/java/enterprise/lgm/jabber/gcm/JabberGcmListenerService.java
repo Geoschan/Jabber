@@ -10,10 +10,11 @@ import enterprise.lgm.jabber.ChatActivity;
 import enterprise.lgm.jabber.JabberApplication;
 
 public class JabberGcmListenerService extends GcmListenerService {
+
     @Override public void onMessageReceived(String from, Bundle data) {
         JabberApplication app = ((JabberApplication) getApplication());
         app.setContext(this);
-        
+        ChatActivity.activity.updateList();
             Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra("friendname", data.getString("sender"));
 
