@@ -46,11 +46,6 @@ public class MainActivity extends AppCompatActivity
         app = (JabberApplication)getApplication();
 
         createFriends();
-        for(Friend f: JabberApplication.friends){
-            for(Message m: f.messages){
-                System.out.println("Message : "+m.text);
-            }
-        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -174,6 +169,7 @@ public class MainActivity extends AppCompatActivity
     public void createFriends(){
         try {
             ArrayList<String> contacts= Server.getServer().listFriends(app.getNickname(), app.getPassword());
+            JabberApplication.friends.clear();
             for(String s: contacts){
                 JabberApplication.friends.add(new Friend(s, app));
             }
