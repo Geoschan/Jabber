@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.IOException;
 
@@ -18,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText nicknameET;
     EditText passwordET;
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,12 @@ public class LoginActivity extends AppCompatActivity {
         app.setNickname(nicknameET.getText().toString());
         app.setPassword(passwordET.getText().toString());
 
+        if(checkPlayServices())
+        {
+            Intent msgIntent = new Intent(this, TokenService.class);
+            startService(msgIntent);
+        }
+
         try {
             String message = Server.getServer().login(app.getNickname(), app.getPassword());
             if(message.contains("\"MsgType\":1")){
@@ -80,4 +89,21 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                AlertBuilder.alertSingleChoice("This device is not supported by Google Play Services.", "OK", LoginActivity.this);
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 }
+
+
