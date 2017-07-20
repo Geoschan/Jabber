@@ -68,8 +68,7 @@
         android:divider="@color/cast_expanded_controller_background_color"
         android:dividerHeight="1dp"
         android:paddingBottom="10dp"
-        android:text="blabla"
-        android:layout_below="@+id/friendName" />
+        />
 
     <LinearLayout
         android:id="@+id/form"
