@@ -148,7 +148,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), FriendsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
-
+            Toast.makeText(MainActivity.this, "Settings will soon be added ",
+                    Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_logout) {
             app.clearLoginData();
             Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
