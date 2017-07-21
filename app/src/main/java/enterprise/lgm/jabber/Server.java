@@ -90,7 +90,7 @@ public class Server {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("registerAnswer: (OUTER) " + registerAnswer[0]);
+        //System.out.println("registerAnswer: (OUTER) " + registerAnswer[0]);
         return registerAnswer[0];
     }
 
@@ -327,7 +327,7 @@ public class Server {
                     String ausgabe = "";
                     for (int c; (c = in.read()) >= 0; )
                         ausgabe += (char) c;
-                    System.out.println("string " + ausgabe);
+                   // System.out.println("string " + ausgabe);
                     JSONObject object = null;
                     try {
                         object = new JSONObject(ausgabe);

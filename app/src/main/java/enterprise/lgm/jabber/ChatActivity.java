@@ -1,6 +1,7 @@
 package enterprise.lgm.jabber;
 
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.internal.zzagy;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import enterprise.lgm.jabber.entities.Message;
@@ -33,8 +37,8 @@ public class ChatActivity extends AppCompatActivity {
         friendname = getIntent().getStringExtra("friendname");
         TextView textFriendName = (TextView)findViewById(R.id.friendName);
         textFriendName.setText(friendname);
-
         updateList();
+
 
         ImageButton sendMessageButton = (ImageButton) findViewById(R.id.sendMessageButton);
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +58,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void updateList(){
+        /*
         final ListView chatList = (ListView) findViewById(R.id.msgListView);
         ArrayList<Message> messages = null;
         //ArrayList<String> nachrichten = new ArrayList<String>();
@@ -71,6 +76,8 @@ public class ChatActivity extends AppCompatActivity {
         chatList.setAdapter(adapter);
 
         scrollMyListViewToBottom(chatList);
+        */
+        new ChatTask().execute("");
 
     }
 
@@ -93,6 +100,32 @@ public class ChatActivity extends AppCompatActivity {
         } else {
             final int childIndex = pos - firstListItemPosition;
             return listView.getChildAt(childIndex);
+        }
+    }
+
+    private class ChatTask extends AsyncTask<String, Void, String> {
+        final ListView chatList = (ListView) findViewById(R.id.msgListView);
+        ArrayList<Message> messages = null;
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                messages = Server.getServer().getMessage(app.getNickname(), friendname, app.getPassword());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            zzagy.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // selbst geschrieben blau, zugesendete Nachricht rot
+                    final MessageAdapter adapter = new MessageAdapter(ChatActivity.this, R.layout.message_list, messages);
+                    chatList.setAdapter(adapter);
+
+                    scrollMyListViewToBottom(chatList);
+                }
+            });
+            return null;
         }
     }
 }

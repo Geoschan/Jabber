@@ -37,7 +37,7 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
         // Change icon based on name
         String s = values.get(position);
 
-        System.out.println(s);
+        //System.out.println(s);
 
         String initial = Character.toString(s.charAt(0)).toUpperCase();
         int color = ColorGenerator.MATERIAL.getColor(initial);
