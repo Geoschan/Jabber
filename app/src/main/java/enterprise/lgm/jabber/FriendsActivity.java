@@ -34,123 +34,120 @@ public class FriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        app = (JabberApplication)getApplication();
+        app = (JabberApplication) getApplication();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ListView friendList = (ListView) findViewById(R.id.friendsList);
         ArrayList<String> myList = null;
-        try {
-            myList = Server.getServer().listFriends(app.getNickname(), app.getPassword());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(FriendsActivity.this, android.R.layout.simple_list_item_1, myList );
-        friendList.setAdapter(adapter);
-
-        friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-                // TODO Auto-generated method stub
-                        position = pos;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
-                        builder.setMessage("Do you want to delete this friend?");
-                        builder.setCancelable(true);
-                        builder.setPositiveButton(
-                                "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        String selectedFromList =(String) (friendList.getItemAtPosition(position));
-                                        try {
-                                            Server.getServer().removeFriend(app.getNickname(), app.getPassword(), selectedFromList);
-                                            adapter.notifyDataSetChanged();
-                                            friendList.invalidateViews();
-                                            MainActivity.adapter = new MobileArrayAdapter(FriendsActivity.this, Server.getServer().listFriends(app.getNickname(), app.getPassword()));
-                                            MainActivity.chatList.setAdapter(MainActivity.adapter);
-                                            recreate();
-                                            Toast.makeText(FriendsActivity.this, "Friend succesfully deleted!",
-                                                    Toast.LENGTH_LONG).show();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                        builder.setNegativeButton(
-                                "Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alertRepeat = builder.create();
-                        alertRepeat.show();
-
-
-
-
-                return true;
+        if (app.isConnectingToInternet()) {
+            try {
+                myList = Server.getServer().listFriends(app.getNickname(), app.getPassword());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
 
-        final FloatingActionButton addFriend = (FloatingActionButton) findViewById(R.id.addFriend);
-        addFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
-                builder.setMessage("Please enter the nickname: ");
-                builder.setCancelable(true);
-                final EditText input = new EditText(FriendsActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-                builder.setPositiveButton(
-                        "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                FriendNickname = input.getText().toString();
-                                if(FriendNickname== null || FriendNickname == "" || FriendNickname.isEmpty()){
-                                    AlertBuilder.alertSingleChoice("Please enter a nickname", "OK", FriendsActivity.this);
-                                }
-                                else{
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(FriendsActivity.this, android.R.layout.simple_list_item_1, myList);
+            friendList.setAdapter(adapter);
+
+            friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                               int pos, long id) {
+                    // TODO Auto-generated method stub
+                    position = pos;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
+                    builder.setMessage("Do you want to delete this friend?");
+                    builder.setCancelable(true);
+                    builder.setPositiveButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    String selectedFromList = (String) (friendList.getItemAtPosition(position));
                                     try {
-                                        String message=Server.getServer().addFriend(app.getNickname(), app.getPassword(), FriendNickname);
-                                        //shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
+                                        Server.getServer().removeFriend(app.getNickname(), app.getPassword(), selectedFromList);
                                         adapter.notifyDataSetChanged();
                                         friendList.invalidateViews();
                                         MainActivity.adapter = new MobileArrayAdapter(FriendsActivity.this, Server.getServer().listFriends(app.getNickname(), app.getPassword()));
                                         MainActivity.chatList.setAdapter(MainActivity.adapter);
                                         recreate();
-                                        if(message.contains("\"MsgType\":1"))
-                                        {
-                                            Toast.makeText(FriendsActivity.this, "Friend succesfully added!",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                        else if(message.contains("\"MsgType\":0"))
-                                        {
-                                            Toast.makeText(FriendsActivity.this, "User does not exist!",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
+                                        Toast.makeText(FriendsActivity.this, "Friend succesfully deleted!",
+                                                Toast.LENGTH_LONG).show();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                            }
-                        });
-                builder.setNegativeButton(
-                        "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                            });
+                    builder.setNegativeButton(
+                            "Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                AlertDialog alertRepeat = builder.create();
-                alertRepeat.show();
+                    AlertDialog alertRepeat = builder.create();
+                    alertRepeat.show();
 
-            }
-        });
+
+                    return true;
+                }
+            });
+
+            final FloatingActionButton addFriend = (FloatingActionButton) findViewById(R.id.addFriend);
+            addFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
+                    builder.setMessage("Please enter the nickname: ");
+                    builder.setCancelable(true);
+                    final EditText input = new EditText(FriendsActivity.this);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    FriendNickname = input.getText().toString();
+                                    if (FriendNickname == null || FriendNickname == "" || FriendNickname.isEmpty()) {
+                                        AlertBuilder.alertSingleChoice("Please enter a nickname", "OK", FriendsActivity.this);
+                                    } else {
+                                        try {
+                                            String message = Server.getServer().addFriend(app.getNickname(), app.getPassword(), FriendNickname);
+                                            //shared.getString("nickname", ""), shared.getString("password", ""), FriendNickname);
+                                            adapter.notifyDataSetChanged();
+                                            friendList.invalidateViews();
+                                            MainActivity.adapter = new MobileArrayAdapter(FriendsActivity.this, Server.getServer().listFriends(app.getNickname(), app.getPassword()));
+                                            MainActivity.chatList.setAdapter(MainActivity.adapter);
+                                            recreate();
+                                            if (message.contains("\"MsgType\":1")) {
+                                                Toast.makeText(FriendsActivity.this, "Friend succesfully added!",
+                                                        Toast.LENGTH_LONG).show();
+                                            } else if (message.contains("\"MsgType\":0")) {
+                                                Toast.makeText(FriendsActivity.this, "User does not exist!",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            });
+                    builder.setNegativeButton(
+                            "Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alertRepeat = builder.create();
+                    alertRepeat.show();
+
+                }
+            });
+        }
     }
-
 }

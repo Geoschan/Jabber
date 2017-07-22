@@ -46,13 +46,15 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText messageField = (EditText) findViewById(R.id.messageEditText);
-                try {
-                    Server.getServer().sendMessage(app.getNickname(),friendname,messageField.getText().toString(),app.getPassword());
-                    updateList();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    messageField.setText("");
+                if(app.isConnectingToInternet()) {
+                    try {
+                        Server.getServer().sendMessage(app.getNickname(), friendname, messageField.getText().toString(), app.getPassword());
+                        updateList();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        messageField.setText("");
+                    }
                 }
             }
         });
@@ -117,23 +119,27 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            try {
-                messages = Server.getServer().getMessage(app.getNickname(), friendname, app.getPassword());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            zzagy.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // selbst geschrieben blau, zugesendete Nachricht rot
-                    final MessageAdapter adapter = new MessageAdapter(ChatActivity.this, R.layout.message_list, messages);
-                    chatList.setAdapter(adapter);
-
-                    scrollMyListViewToBottom(chatList);
+            if(app.isConnectingToInternet()) {
+                try {
+                    messages = Server.getServer().getMessage(app.getNickname(), friendname, app.getPassword());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
-            return null;
+
+                zzagy.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // selbst geschrieben blau, zugesendete Nachricht rot
+                        final MessageAdapter adapter = new MessageAdapter(ChatActivity.this, R.layout.message_list, messages);
+                        chatList.setAdapter(adapter);
+
+                        scrollMyListViewToBottom(chatList);
+
+                    }
+                });
+            }
+                return null;
+
         }
     }
 }

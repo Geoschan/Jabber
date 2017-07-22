@@ -170,14 +170,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void createFriends(){
-        try {
-            ArrayList<String> contacts= Server.getServer().listFriends(app.getNickname(), app.getPassword());
-            JabberApplication.friends.clear();
-            for(String s: contacts){
-                JabberApplication.friends.add(new Friend(s, app));
+        if(app.isConnectingToInternet()) {
+            try {
+                ArrayList<String> contacts = Server.getServer().listFriends(app.getNickname(), app.getPassword());
+                JabberApplication.friends.clear();
+                for (String s : contacts) {
+                    JabberApplication.friends.add(new Friend(s, app));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -199,7 +201,9 @@ public class MainActivity extends AppCompatActivity
                         else{
                             try {
                               for(Friend f: JabberApplication.friends){
-                                  Server.getServer().sendMessage(app.getNickname(),f.nickname,broadMessage,app.getPassword());
+                                  if(app.isConnectingToInternet()) {
+                                      Server.getServer().sendMessage(app.getNickname(), f.nickname, broadMessage, app.getPassword());
+                                  }
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();

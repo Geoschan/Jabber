@@ -4,6 +4,9 @@ import android.app.Application;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,23 +21,21 @@ import enterprise.lgm.jabber.entities.Friend;
 
 //NOT IN USE YET
 //TODO make everything easily available through JabberApplication
-public class JabberApplication extends Application{
+public class JabberApplication extends Application {
     private SharedPreferences prefs;
     private Context context;
     public static ArrayList<Friend> friends = new ArrayList<Friend>();
     public int notificationId = 1;
 
 
-    
-
     public void setContext(Context context) {
         this.context = context;
-        this.prefs = context.getSharedPreferences("loginData",Context.MODE_PRIVATE);
+        this.prefs = context.getSharedPreferences("loginData", Context.MODE_PRIVATE);
     }
 
     public void setNickname(String nickname) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("nickname",nickname);
+        editor.putString("nickname", nickname);
         editor.commit();
     }
 
@@ -44,7 +45,7 @@ public class JabberApplication extends Application{
 
     public void setPassword(String password) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("password",password);
+        editor.putString("password", password);
         editor.commit();
     }
 
@@ -60,24 +61,33 @@ public class JabberApplication extends Application{
     }
 
     public void sendTokenToServer(String token) {
-        try {
-            Server.getServer().refreshToken(this.getNickname(),this.getPassword(),token);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(this.isConnectingToInternet()) {
+            try {
+                Server.getServer().refreshToken(this.getNickname(), this.getPassword(), token);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void setNotificationBoolean(boolean notify)
-    {
+    public void setNotificationBoolean(boolean notify) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("notify",notify);
+        editor.putBoolean("notify", notify);
         editor.commit();
     }
 
-    public boolean getNotificationBoolean( )
-    {
+    public boolean getNotificationBoolean() {
         return prefs.getBoolean("notify", false);
     }
 
-
+    public boolean isConnectingToInternet() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) { // connected to the internet
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI ||activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

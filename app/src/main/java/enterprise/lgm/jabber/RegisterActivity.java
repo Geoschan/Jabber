@@ -44,24 +44,26 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 //Try to register user if pws are equal
                 else if (pw1.equals(pw2)) {
-                    try {
-                        String message= Server.getServer().register(user, pw1);
+                    if(app.isConnectingToInternet()) {
+                        try {
+                            String message = Server.getServer().register(user, pw1);
 
-                        if(message.contains("1")){
-                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            if (message.contains("1")) {
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 
-                            intent.putExtra("nickname", user);
-                            startActivity(intent);
+                                intent.putExtra("nickname", user);
+                                startActivity(intent);
 
-                        }else if (message.contains("0")){
-                            AlertBuilder.alertSingleChoice("The nickname is not available. Please try another one.", "OK", RegisterActivity.this);
-                        }else{
-                            AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", RegisterActivity.this);
+                            } else if (message.contains("0")) {
+                                AlertBuilder.alertSingleChoice("The nickname is not available. Please try another one.", "OK", RegisterActivity.this);
+                            } else {
+                                AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", RegisterActivity.this);
+                            }
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
                         }
-
-                    } catch (IOException e) {
-
-                        e.printStackTrace();
                     }
                 }
 

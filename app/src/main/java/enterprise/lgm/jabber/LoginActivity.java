@@ -26,7 +26,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         app = (JabberApplication)getApplication();
         app.setContext(this);
-        Server.getServer().setApplication(app);
+        if(app.isConnectingToInternet()) {
+            Server.getServer().setApplication(app);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -70,22 +72,24 @@ public class LoginActivity extends AppCompatActivity {
             Intent msgIntent = new Intent(this, TokenService.class);
             startService(msgIntent);
         }
+        if(app.isConnectingToInternet()) {
+            try {
 
-        try {
-            String message = Server.getServer().login(app.getNickname(), app.getPassword());
-            if(message.contains("\"MsgType\":1")){
-                app.setNotificationBoolean(true);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("nickname", app.getNickname());
-                startActivity(intent);
-                finish();
-            }else if (message.contains("\"MsgType\":0")){
-                AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);
-            }else{
-                AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", LoginActivity.this);
+                String message = Server.getServer().login(app.getNickname(), app.getPassword());
+                if (message.contains("\"MsgType\":1")) {
+                    app.setNotificationBoolean(true);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("nickname", app.getNickname());
+                    startActivity(intent);
+                    finish();
+                } else if (message.contains("\"MsgType\":0")) {
+                    AlertBuilder.alertSingleChoice("Password or Nickname are incorrect", "OK", LoginActivity.this);
+                } else {
+                    AlertBuilder.alertSingleChoice("There is an unexpected Error with the Server", "OK", LoginActivity.this);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
