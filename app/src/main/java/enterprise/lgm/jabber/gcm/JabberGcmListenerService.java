@@ -21,16 +21,18 @@ import enterprise.lgm.jabber.R;
 public class JabberGcmListenerService extends GcmListenerService {
 
     Context context = this;
-    boolean foreground = false;
+    //für notifications only im background einkommentieren
+   // boolean foreground = false;
 
     @Override public void onMessageReceived(String from, Bundle data) {
-        try {
+       /* try {
             foreground = new ForegroundCheckTask().execute(context).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        */
         JabberApplication app = ((JabberApplication) getApplication());
         app.setContext(this);
         if (ChatActivity.activity != null) {
@@ -41,7 +43,7 @@ public class JabberGcmListenerService extends GcmListenerService {
                 }
             });
         }
-        if (foreground==false) {
+       // if (foreground==false) {
             Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra("friendname", data.getString("sender"));
 
@@ -70,6 +72,6 @@ public class JabberGcmListenerService extends GcmListenerService {
                 sendBroadcast(i);
             }
         }
-    }
+   // }
 
 }
